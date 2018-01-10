@@ -7,13 +7,22 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      resText: ''
+      resText: '',
+      user: null,
     }
   }
   
   sendReq = () => {
+    console.log('sendReq')
     LY.Cloud.run('testHelloCloud').then((result) => {
       this.setState({resText: result})
+    })
+  }
+  
+  login = () => {
+    console.log('login')
+    LY.User.loginWithMobilePhone('13587369299', '321456').then((user) => {
+      this.setState({user})
     })
   }
   
@@ -29,6 +38,8 @@ class App extends Component {
         </p>
         <div onClick={this.sendReq}>request</div>
         <div>{this.state.resText}</div>
+        <div onClick={this.login}>login</div>
+        <div>{this.state.user ? this.state.user.username : ''}</div>
       </div>
     );
   }
