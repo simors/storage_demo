@@ -9,6 +9,7 @@ class App extends Component {
     this.state = {
       resText: '',
       user: null,
+      imagePath: ''
     }
   }
   
@@ -26,6 +27,18 @@ class App extends Component {
     })
   }
   
+  uploadImg = (e) => {
+    e.preventDefault()
+    let target = e.target
+    let file = target.files[0]
+    console.log(file)
+    let upfile = new LY.File(file.name, file)
+    upfile.save().then((netFile) => {
+      console.log('netFile', netFile)
+      this.setState({imagePath: netFile.attributes.url})
+    })
+  }
+  
   render() {
     return (
       <div className="App">
@@ -40,6 +53,10 @@ class App extends Component {
         <div>{this.state.resText}</div>
         <div onClick={this.login}>login</div>
         <div>{this.state.user ? this.state.user.username : ''}</div>
+        <div>
+          <img src={this.state.imagePath} />
+          <input type="file" accept="image/*" onChange={this.uploadImg}/>
+        </div>
       </div>
     );
   }

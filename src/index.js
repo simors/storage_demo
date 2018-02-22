@@ -10,7 +10,8 @@ LY.init({
   appKey: 'VZbSM9RoutQ7X3yHTGOLiyZgR1Fhqmok',
   serverURLs: {
     engine: 'http://localhost:16800',
-    auth: 'http://localhost:16801'
+    auth: 'http://localhost:16801',
+    api: 'http://localhost:16803'
   },
 })
 
