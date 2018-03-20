@@ -9,7 +9,9 @@ class App extends Component {
     this.state = {
       resText: '',
       user: null,
-      imagePath: ''
+      imagePath: '',
+      code: '',
+      validPhone: false
     }
   }
   
@@ -39,6 +41,20 @@ class App extends Component {
     })
   }
   
+  reqCaptcha = () => {
+    LY.User.requestMobilePhoneVerify('13574897719')
+  }
+  
+  onCaptchaChange = (e) => {
+    this.setState({code: e.target.value})
+  }
+  
+  phoneVerify = () => {
+    LY.User.verifyMobilePhone('13574897719', this.state.code).then((res) => {
+      this.setState({validPhone: res})
+    })
+  }
+  
   render() {
     return (
       <div className="App">
@@ -56,6 +72,15 @@ class App extends Component {
         <div>
           <img src={this.state.imagePath} />
           <input type="file" accept="image/*" onChange={this.uploadImg}/>
+        </div>
+        <div style={{marginTop: '20px'}}>
+          <span>13574897719</span>
+          <span onClick={this.reqCaptcha}>获取验证码</span>
+          <div>
+            <input onChange={this.onCaptchaChange}/>
+            <input type="button" onClick={this.phoneVerify} value="验证"/>
+            <span>{this.state.validPhone ? '成功' : '失败'}</span>
+          </div>
         </div>
       </div>
     );
